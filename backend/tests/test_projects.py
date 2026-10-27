@@ -74,7 +74,7 @@ def a_client() -> httpx.AsyncClient:
 
 
 @asynccontextmanager
-async def signed_in(email: str = "sparsh@example.com"):
+async def signed_in(email: str = "test.user@example.com"):
     """A client with an account and its session cookie already held."""
     async with a_client() as http:
         await http.post("/auth/register", json={"email": email, "password": "a-good-password"})
@@ -98,7 +98,7 @@ def test_confirmed_stop_releases_account_for_next_design(monkeypatch):
         manager = RunManager()
         monkeypatch.setattr(app.state, "runs", manager)
         async with a_store() as store, signed_in() as http:
-            user = await store.user_by_email("sparsh@example.com")
+            user = await store.user_by_email("test.user@example.com")
             project = await store.create_project(user.id, "Stop regression")
             await store.create_thread("stop-me", project.id, user.id, "old brief",
                                       run_kind="brief", run_payload={"prompt": "old brief"})

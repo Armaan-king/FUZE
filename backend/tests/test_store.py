@@ -50,7 +50,7 @@ async def fresh():
         yield store
 
 
-async def a_user(store: Store, email: str = "sparsh@example.com"):
+async def a_user(store: Store, email: str = "test.user@example.com"):
     return await store.create_user(email, "argon2-hash-goes-here")
 
 
@@ -61,7 +61,7 @@ def test_a_registered_user_is_found_by_email():
     async def go():
         async with fresh() as store:
             created = await a_user(store)
-            return created, await store.user_by_email("sparsh@example.com")
+            return created, await store.user_by_email("test.user@example.com")
 
     created, found = run(go())
     assert found is not None
@@ -72,8 +72,8 @@ def test_a_registered_user_is_found_by_email():
 def test_email_is_folded_so_case_cannot_split_an_account():
     async def go():
         async with fresh() as store:
-            await store.create_user("Sparsh@Example.COM", "h")
-            return await store.user_by_email("sparsh@example.com")
+            await store.create_user("Test.User@Example.COM", "h")
+            return await store.user_by_email("test.user@example.com")
 
     assert run(go()) is not None
 
@@ -94,9 +94,9 @@ def test_a_duplicate_email_is_refused():
 def test_a_duplicate_is_refused_across_case_too():
     async def go():
         async with fresh() as store:
-            await store.create_user("sparsh@example.com", "h")
+            await store.create_user("test.user@example.com", "h")
             try:
-                await store.create_user("SPARSH@EXAMPLE.COM", "h")
+                await store.create_user("TEST.USER@EXAMPLE.COM", "h")
             except EmailTaken:
                 return "refused"
             return "accepted"

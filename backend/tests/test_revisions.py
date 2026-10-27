@@ -43,7 +43,7 @@ def test_research_facts_and_conflicts_survive_persistence_edit_and_export(monkey
 
 
 async def seed(store, http):
-    user = await store.user_by_email("sparsh@example.com")
+    user = await store.user_by_email("test.user@example.com")
     project = await store.create_project(user.id, "Revision reference")
     await store.create_thread("revision-reference", project.id, user.id, "3.3 V sensor")
     await store.save_progress("revision-reference", 0, "done")
@@ -224,7 +224,7 @@ def test_interrupted_bom_reuses_committed_work_and_finishes(automatic, monkeypat
 
     async def go():
         async with a_store() as store, signed_in() as http:
-            user = await store.user_by_email("sparsh@example.com")
+            user = await store.user_by_email("test.user@example.com")
             project = await store.create_project(user.id, "Interrupted BOM")
             payload = {"rows": [{"mpn": CANDIDATE.mpn, "qty": 3, "reference": "U1"}], "brief": None}
             await store.create_thread("interrupted-bom", project.id, user.id, "BOM", run_kind="bom", run_payload=payload)

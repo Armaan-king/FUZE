@@ -532,4 +532,6 @@ A successful adapter check proves the exercised connection and response handling
 
 ## License and attribution
 
+FUZE is a team-developed software engineering project. The application reflects the original team's work and subsequent contributions to its architecture, sourcing, validation and user experience.
+
 [MIT](LICENSE). Original copyright notices, assets and engineering documents are retained. Historical proposals and SWE deliverables describe earlier versions; this README describes the current implementation.

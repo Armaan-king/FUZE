@@ -59,7 +59,7 @@ async def signed_out():
             app.state.store = previous
 
 
-CREDENTIALS = {"email": "sparsh@example.com", "password": "correct horse battery"}
+CREDENTIALS = {"email": "test.user@example.com", "password": "correct horse battery"}
 
 
 # ── registration ──────────────────────────────────────────────────────────────
@@ -73,9 +73,9 @@ def test_registering_signs_you_in():
 
     created, me = run(go())
     assert created.status_code == 201
-    assert created.json()["email"] == "sparsh@example.com"
+    assert created.json()["email"] == "test.user@example.com"
     assert me.status_code == 200
-    assert me.json()["email"] == "sparsh@example.com"
+    assert me.json()["email"] == "test.user@example.com"
 
 
 def test_a_new_account_has_not_been_onboarded():
@@ -162,7 +162,7 @@ def test_login_is_case_insensitive_on_the_email():
             await http.post("/auth/logout")
             return await http.post(
                 "/auth/login",
-                json={"email": "SPARSH@EXAMPLE.COM", "password": CREDENTIALS["password"]},
+                json={"email": "TEST.USER@EXAMPLE.COM", "password": CREDENTIALS["password"]},
             )
 
     assert run(go()).status_code == 200
